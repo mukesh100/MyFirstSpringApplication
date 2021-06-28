@@ -1,2 +1,2 @@
 # MyFirstSpringApplication
-Students detais admitted in a college
+Students details admitted in a college
