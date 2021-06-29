@@ -13,4 +13,4 @@ Creating spring boot application for admission of students in a college in which
 
 #### 4th API -----> Update the students details of the student table from database.
 
-#### 5th API -----> Delete the students i.e. make the students which you want to delete inactive keeping detais safe.
+#### 5th API -----> Delete the students i.e. make the students which you want to delete inactive keeping details safe.
