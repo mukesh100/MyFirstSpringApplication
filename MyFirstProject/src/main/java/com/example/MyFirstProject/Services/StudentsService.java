@@ -24,7 +24,7 @@ public class StudentsService {
 
   public List<Students> getAllStudents()
   {
-    List<Students> student = new ArrayList<>(studentsRepository.findAll());
+    List<Students> student = new ArrayList<>(studentsRepository.findAllByActiveTrue());
     logger.info(Constants.SUCCESS);
     return student;
   }
@@ -41,6 +41,11 @@ public class StudentsService {
       logger.warn(Constants.FAILURE);
       return null;
     }
+  }
+
+  public Long countStudent()
+  {
+    return studentsRepository.count();
   }
 
   public Students insertStudent(Students student)

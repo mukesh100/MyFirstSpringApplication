@@ -26,6 +26,11 @@ public class StudentsController {
     return studentsService.getStudentByName(name);
   }
 
+  @GetMapping("/countStudent")
+  public  Long countStudent()
+  {
+    return studentsService.countStudent();
+  }
   @PostMapping("/insertStudent")
   public Students insertStudent(@RequestBody Students student)
   {
