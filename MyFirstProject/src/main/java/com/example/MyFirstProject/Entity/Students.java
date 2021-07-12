@@ -37,6 +37,8 @@ public class Students {
 
   @Column(name="contact")
   private String contact;
+  
+   private boolean is_revoked = Boolean.FALSE;
 
   @Column(name="is_revoked")
   private boolean is_revoked = Boolean.FALSE;
