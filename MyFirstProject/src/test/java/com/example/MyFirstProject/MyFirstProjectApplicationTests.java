@@ -43,6 +43,7 @@ public class MyFirstProjectApplicationTests {
 
 	}
 
+	/*
 	@Test
 	public void testInsertStudent() throws Exception
 	{
@@ -78,7 +79,7 @@ public class MyFirstProjectApplicationTests {
 		assertEquals(student.getCreate_timestamp(), responseBody.getCreate_timestamp());
 		System.out.println(responseBody);
 	}
-
+*/
 	@Test
 	public void testDeleteStudentById() throws Exception
 	{

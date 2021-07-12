@@ -1,12 +1,11 @@
 package com.example.MyFirstProject.Entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.annotations.Where;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -16,13 +15,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "students")
-@SQLDelete(sql = "UPDATE students SET is_revoked = true WHERE id=?")
-@Where(clause = "is_revoked=false")
 public class Students {
 
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name="id", updatable = false, nullable = false)
   private Long id;
 
@@ -40,8 +38,8 @@ public class Students {
   
    private boolean is_revoked = Boolean.FALSE;
 
-  @Column(name="is_revoked")
-  private boolean is_revoked = Boolean.FALSE;
+  @Column(name="is_Revoked")
+  private boolean isRevoked = Boolean.FALSE;
 
   @DateTimeFormat(iso=DateTimeFormat.ISO.DATE_TIME)
   @CreationTimestamp
