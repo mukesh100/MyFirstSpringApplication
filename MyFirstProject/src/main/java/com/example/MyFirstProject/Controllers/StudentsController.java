@@ -8,7 +8,6 @@ import com.example.MyFirstProject.dto.response.InsertStudentResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,29 +21,31 @@ public class StudentsController {
   @Autowired
   private StudentsService studentsService;
 
+
   @GetMapping("getAllActiveStudents")
-  ResponseEntity<List<Students>> getAllActiveStudent() {
+  public ResponseEntity<List<Students>> getAllActiveStudent() {
     return ResponseEntity.ok(studentsService.getAllActiveStudents());
   }
 
+
   @GetMapping("getAllInactiveStudents")
-  ResponseEntity<List<Students>> getAllInactiveStudent() {
+  public ResponseEntity<List<Students>>getAllInactiveStudent() {
     return ResponseEntity.ok(studentsService.getAllInactiveStudents());
   }
 
   @GetMapping("/getByName/{name}")
-  ResponseEntity<Students> getStudentByName(@PathVariable String name) {
+  public ResponseEntity<Students> getStudentByName(@PathVariable String name) {
     return ResponseEntity.ok(studentsService.getStudentByName(name));
   }
 
   @GetMapping("/countActiveStudent")
-  ResponseEntity<Long> countActiveStudent()
+  public ResponseEntity<Long> countActiveStudent()
   {
     return ResponseEntity.ok(studentsService.countActiveStudent());
   }
 
   @GetMapping("/countRevokedStudent")
-  ResponseEntity<Long> countRevokedActiveStudent()
+  public ResponseEntity<Long> countRevokedActiveStudent()
   {
     return ResponseEntity.ok(studentsService.countRevokedStudent());
   }
@@ -61,8 +62,8 @@ public class StudentsController {
 
 
   @PutMapping("/updateStudent/{id}")
-  public ResponseEntity<BaseResponse<InsertStudentResponse>> updateStudent(Long id,
-    @RequestBody @Valid @NotNull InsertStudentRequest request) {
+  public ResponseEntity<BaseResponse<InsertStudentResponse>> updateStudent(
+    @RequestBody @Valid @NotNull InsertStudentRequest request, @PathVariable  @NotNull(message = "Id is mandatory") Long id) {
 
     return new ResponseEntity<>(new BaseResponse<>(
       studentsService.updateStudent(request, id)),
@@ -70,19 +71,8 @@ public class StudentsController {
   }
 
 
-
-/*
-  @PutMapping("/updateStudent/{id}")
-  ResponseEntity<Students> updateStudent(@PathVariable Long id, @RequestBody @Validated Students student) {
-    return ResponseEntity.ok(studentsService.updateStudent(id, student));
-  }
-
- */
-
-
-
   @DeleteMapping("/deleteStudentById/{id}")
-  ResponseEntity<Students> deleteStudentById(@PathVariable Long id) {
+  public ResponseEntity<Students> deleteStudentById(@PathVariable Long id) {
     return ResponseEntity.ok(studentsService.deleteStudentById(id));
   }
 

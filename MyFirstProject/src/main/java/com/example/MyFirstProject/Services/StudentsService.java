@@ -9,16 +9,17 @@ import com.example.MyFirstProject.exception.StudentBadRequestException;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static com.example.MyFirstProject.exception.ErrorMessage.ID_AND_NAME_ALREADY_EXIST;
+import static com.example.MyFirstProject.exception.ErrorMessage.ID_DOES_NOT_EXIST;
 
 @Slf4j
 @Service
@@ -98,9 +99,13 @@ public class StudentsService {
 
   public InsertStudentResponse updateStudent(final InsertStudentRequest request, Long id) {
 
-    this.validateRequest(request);
-    InsertStudentResponse response;
-      Students student = studentsRepository.getById(id);
+      Students student = studentsRepository.findById(id).orElse(null);
+      if(Objects.isNull(student))
+      {
+        log.error("Id does not exist to update {}", id);
+        throw new StudentBadRequestException(ID_DOES_NOT_EXIST);
+      }
+
       student.setId(request.getId());
       student.setName(request.getName());
       student.setStream(request.getStream());
@@ -110,7 +115,7 @@ public class StudentsService {
       final Students savedStudent = studentsRepository.save(student);
       logger.info(Constants.SUCCESS);
 
-      response = InsertStudentResponse.builder()
+      return InsertStudentResponse.builder()
         .id(savedStudent.getId())
         .name(savedStudent.getName())
         .stream(savedStudent.getStream())
@@ -118,10 +123,7 @@ public class StudentsService {
         .contact(savedStudent.getContact())
         .build();
 
-    return response;
   }
-
-
 
 
   private void validateRequest(final InsertStudentRequest request) {
@@ -135,27 +137,6 @@ public class StudentsService {
       throw new StudentBadRequestException(ID_AND_NAME_ALREADY_EXIST);
     }
   }
-
- /*
-  public Students updateStudent(Long id, Students student)
-  {
-    if(studentsRepository.existsById(id))
-    {
-      Students existingStudent=studentsRepository.getById(id);
-      BeanUtils.copyProperties(student,existingStudent,"id");
-      student=studentsRepository.save(existingStudent);
-      logger.info(Constants.SUCCESS);
-    }
-    else
-    {
-      logger.warn(Constants.FAILURE);
-      student=null;
-    }
-    return student;
-  }
-
-  */
-
 
 
   public Students deleteStudentById(Long id)

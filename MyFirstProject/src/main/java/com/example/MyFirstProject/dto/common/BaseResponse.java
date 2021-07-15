@@ -1,5 +1,6 @@
 package com.example.MyFirstProject.dto.common;
 
+import com.example.MyFirstProject.Entity.Students;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
